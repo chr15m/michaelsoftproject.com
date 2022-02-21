@@ -27,7 +27,7 @@
    :task ""
    :who ""
    :progress 0
-   :start nil
+   :parent nil
    :duration 0})
 
 (defn make-project []
@@ -36,7 +36,7 @@
    :company nil
    :lead nil
    :start nil
-   :tasks {}})
+   :tasks []})
 
 (defn editable
   [parent k & [extra]]

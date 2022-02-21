@@ -11,28 +11,44 @@
   (swap! state assoc :project (data/make-project)))
 
 (defn create-task [tasks]
-  (let [task (data/make-task)]
-    (swap! tasks assoc (:id task) task)))
+  (swap! tasks conj (data/make-task)))
 
 (defn remove-task [tasks id]
-  (swap! tasks dissoc id))
+  (swap! tasks (fn [old-tasks]
+                 (vec
+                   (remove #(= id (:id %)) old-tasks)))))
 
-(defn component-task-edit [tasks id start duration]
+(defn component-task-header []
   [:tr
-   [:td [:input (data/editable tasks [id :task])]]
-   [:td [:input (data/editable tasks [id :who])]]
-   [:td [:input (data/editable tasks [id :progress]
+   [:td ""]
+   [:td "Task"]
+   [:td "Who"]
+   [:td "Progress"]
+   [:td "Parent"]
+   [:td "Days"]
+   [:td "Start"]
+   [:td "End"]
+   [:td ""]])
+
+(defn component-task-edit [tasks idx id]
+  [:tr
+   [:td (inc idx)]
+   [:td [:input (data/editable tasks [idx :task])]]
+   [:td [:input (data/editable tasks [idx :who])]]
+   [:td [:input (data/editable tasks [idx :progress]
                                {:type "number"
                                 :min 0
                                 :max 100})]]
-   [:td [:input (data/editable tasks [id :duration]
+   [:td [:input (data/editable tasks [idx :parent]
                                {:type "number"
                                 :min 0
                                 :max 1000})]]
-   [:td [:input (data/editable tasks [id :start]
-                               {:type "date"
-                                :defaultValue (data/today)})]]
-   [:td [:span (data/end-date start duration)]]
+   [:td [:input (data/editable tasks [idx :duration]
+                               {:type "number"
+                                :min 0
+                                :max 1000})]]
+   [:td [:span "-"]]
+   [:td [:span #_ (data/end-date start duration)]]
    [:td [:button {:on-click #(remove-task tasks id)} "X"]]])
 
 (defn component-tasks-table [tasks]
@@ -40,18 +56,12 @@
    [:div
     [:table
      [:thead
-      [:tr
-       [:td "Task"]
-       [:td "Who"]
-       [:td "Progress"]
-       [:td "Days"]
-       [:td "Start"]
-       [:td "End"]
-       [:td ""]]]
+      [component-task-header]]
      [:tbody
       (doall
-        (for [[id {:keys [start duration]}] @tasks]
-          (with-meta [component-task-edit tasks id start duration] {:key id})))]]
+        (for [idx (range (count @tasks))]
+          (let [id (:id (nth @tasks idx))]
+            (with-meta [component-task-edit tasks idx id] {:key id}))))]]
     [:button {:on-click #(create-task tasks)} "Add task"]]])
 
 (defn component-home [_state]
@@ -74,7 +84,11 @@
      [:h1 [:input (data/editable project [:title] {:placeholder "Untitled project"})]]
      [:h2 [:input (data/editable project [:company] {:placeholder "Company name"})]]
      [:h3 [:input (data/editable project [:lead] {:placeholder "Project lead"})]]
-     [component-tasks-table tasks]]))
+     [:p [:label "Start: " [:input (data/editable project [:start]
+                                                  {:type "date"
+                                                   :defaultValue (data/today)})]]]
+     [component-tasks-table tasks]
+     [:pre (pr-str @tasks)]]))
 
 (defn component-main [state]
   (if (@state :project)
