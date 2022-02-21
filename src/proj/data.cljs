@@ -17,9 +17,13 @@
         (js/Date.)
         (.getTime)
         (+ (* duration 1000 60 60 24))
-        (js/Date.)
-        (.toLocaleDateString))
-    ""))
+        (js/Date.))
+    (js/Date. "INVALID")))
+
+(defn format-date [d]
+  (cond (= d :error) "error"
+        d (.toLocaleDateString d)
+        :else ""))
 
 (defn sum-parent-duration [durations *tasks task depth]
   (let [parent-idx (:parent task)

@@ -2,6 +2,7 @@
   (:require
     [proj.data :as data]
     ["react-twemoji$default" :as Twemoji]
+    [sitefox.ui :refer [log]]
     [reagent.core :as r]
     [reagent.dom :as rdom]))
 
@@ -18,7 +19,7 @@
                  (vec
                    (remove #(= id (:id %)) old-tasks)))))
 
-(defn component-task-header []
+(defn component-task-header [days]
   [:tr
    [:td ""]
    [:td "Task"]
@@ -28,48 +29,66 @@
    [:td "Days"]
    [:td "Start"]
    [:td "End"]
-   [:td ""]])
+   [:td]
+   (doall
+     (for [d (range (max 14 days))]
+       [:td {:key d} d]))])
 
-(defn component-task-edit [start tasks idx task]
-  (let [[start end] (data/compute-date-range start @tasks task)]
-    [:tr
-     [:td (inc idx)]
-     [:td [:input (data/editable tasks [idx :task])]]
-     [:td [:input (data/editable tasks [idx :who])]]
-     [:td [:input (data/editable tasks [idx :progress]
-                                 {:type "number"
-                                  :min 0
-                                  :max 100})]]
-     [:td [:input (data/editable tasks [idx :parent]
-                                 {:class (if (= start :error) :error)
-                                  :type "number"
-                                  :min 0
-                                  :max 1000})]]
-     [:td [:input (data/editable tasks [idx :duration]
-                                 {:type "number"
-                                  :min 0
-                                  :max 1000})]]
-     [:td [:span start]]
-     [:td [:span end]]
-     [:td [:button {:on-click #(remove-task tasks (:id task))} "X"]]]))
+(defn component-task-edit [project-start [start end] tasks idx task days]
+  [:tr
+   [:td (inc idx)]
+   [:td [:input (data/editable tasks [idx :task])]]
+   [:td [:input (data/editable tasks [idx :who])]]
+   [:td [:input (data/editable tasks [idx :progress]
+                               {:type "number"
+                                :min 0
+                                :max 100})]]
+   [:td [:input (data/editable tasks [idx :parent]
+                               {:class (when (= start :error) :error)
+                                :type "number"
+                                :min 0
+                                :max 1000})]]
+   [:td [:input (data/editable tasks [idx :duration]
+                               {:type "number"
+                                :min 0
+                                :max 1000})]]
+   [:td [:span (data/format-date start)]]
+   [:td [:span (data/format-date end)]]
+   [:td [:button {:on-click #(remove-task tasks (:id task))} "X"]]
+   (doall
+     (for [d (range (max 14 days))]
+       (let [date (data/end-date project-start d)
+             filled (and (<= (.getTime start) (.getTime date))
+                         (> (.getTime end) (.getTime date)))]
+         [:td.map {:key d
+                   :class (when filled :fill)}])))])
 
 (defn component-tasks-table [start tasks]
-  [identity
-   [:div
-    [:table
-     [:thead
-      [component-task-header]]
-     [:tbody
-      (doall
-        (for [idx (range (count @tasks))]
-          (let [task (nth @tasks idx)]
-            (with-meta [component-task-edit start tasks idx task] {:key (:id task)}))))]]
-    [:button {:on-click #(create-task tasks)} "Add task"]]])
+  (let [start-end-map (into {} (map (fn [task] {(:id task) (data/compute-date-range start @tasks task)}) @tasks))
+        last-date (->> start-end-map
+                       vals
+                       (map second)
+                       (map #(js/Date. %))
+                       (apply max))
+        seconds (- last-date (js/Date. start))
+        days (/ seconds (* 1000 60 60 24))]
+    (log days)
+    [:div
+     [:table
+      [:thead
+       [component-task-header days]]
+      [:tbody
+       (doall
+         (for [idx (range (count @tasks))]
+           (let [task (nth @tasks idx)
+                 id (:id task)]
+             (with-meta [component-task-edit start (get start-end-map id) tasks idx task days] {:key id}))))]]
+     [:button {:on-click #(create-task tasks)} "Add task"]]))
 
 (defn component-home [_state]
   [:div#landing
    [:h1 "Michaelsoft Project"]
-   [:p "A simple Gantt chart planner. No sign up required."]
+   [:p "A simple online Gantt chart planner. No sign up required. For web not Binbows."]
    [:p
     [:button {:on-click create-project} "new project"]]
    [:p]
@@ -91,7 +110,8 @@
                                                   {:type "date"
                                                    :defaultValue (data/today)})]]]
      [component-tasks-table start tasks]
-     [:pre (pr-str @tasks)]]))
+     ;[:pre (pr-str @tasks)]
+     ]))
 
 (defn component-main [state]
   (if (@state :project)
