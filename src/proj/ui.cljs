@@ -51,7 +51,7 @@
      [:tbody
       (doall
         (for [[id {:keys [start duration]}] @tasks]
-          [component-task-edit tasks id start duration]))]]
+          (with-meta [component-task-edit tasks id start duration] {:key id})))]]
     [:button {:on-click #(create-task tasks)} "Add task"]]])
 
 (defn component-home [_state]
