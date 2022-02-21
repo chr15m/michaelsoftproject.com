@@ -21,21 +21,22 @@
         (.toLocaleDateString))
     ""))
 
-(defn sum-parent-duration [durations *tasks task]
+(defn sum-parent-duration [durations *tasks task depth]
   (let [parent-idx (:parent task)
         parent-task (when (and parent-idx (> (int parent-idx) 0))
                       (nth *tasks (dec (int parent-idx))))]
-    ;(log task parent-idx (dec (int parent-idx)))
-    (if parent-task
-      (conj (sum-parent-duration durations *tasks parent-task) (int (:duration parent-task)))
+    (if (and parent-task (< depth (count *tasks)))
+      (conj (sum-parent-duration durations *tasks parent-task (inc depth)) (int (:duration parent-task)))
       nil)))
 
-(defn compute-date-range [start *tasks task idx]
+(defn compute-date-range [start *tasks task]
   (let [duration (int (:duration task))
-        parent-durations (sum-parent-duration [] *tasks task)
+        parent-durations (sum-parent-duration [] *tasks task 0)
         parents-duration (apply + parent-durations)]
-    (log "parent-duration" idx parent-durations parents-duration (+ parents-duration duration))
-    [(end-date start parents-duration) (end-date start (+ parents-duration duration))]))
+    ; show an error if recursion depth exceeded task count
+    (if (= (count *tasks) (count parent-durations))
+      [:error :error]
+      [(end-date start parents-duration) (end-date start (+ parents-duration duration))])))
 
 (defn make-id [n]
   (apply str (map (fn [_] (.toString (rand-int 16) 16)) (range n))))

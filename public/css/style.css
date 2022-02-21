@@ -50,6 +50,12 @@ h3 input {
   font-size: 1.125em;
 }
 
+/*** special ***/
+
+input.error {
+  border: 1px solid #ED5B5B;
+}
+
 /*** landing page ***/
 
 #landing {

@@ -31,7 +31,7 @@
    [:td ""]])
 
 (defn component-task-edit [start tasks idx task]
-  (let [[start end] (data/compute-date-range start @tasks task idx)]
+  (let [[start end] (data/compute-date-range start @tasks task)]
     [:tr
      [:td (inc idx)]
      [:td [:input (data/editable tasks [idx :task])]]
@@ -41,7 +41,8 @@
                                   :min 0
                                   :max 100})]]
      [:td [:input (data/editable tasks [idx :parent]
-                                 {:type "number"
+                                 {:class (if (= start :error) :error)
+                                  :type "number"
                                   :min 0
                                   :max 1000})]]
      [:td [:input (data/editable tasks [idx :duration]
