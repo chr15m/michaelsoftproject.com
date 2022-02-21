@@ -1,0 +1,8 @@
+.*.swp
+.shadow-cljs
+.cache
+node_modules
+public/js
+logs
+database.sqlite
+devserver.js
