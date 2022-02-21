@@ -1,6 +1,7 @@
 (ns proj.ui
   (:require
     [proj.data :as data]
+    ["react-twemoji$default" :as Twemoji]
     [reagent.core :as r]
     [reagent.dom :as rdom]))
 
@@ -55,10 +56,12 @@
 
 (defn component-home [_state]
   [:div#landing
-   [:h1 "Michaelsoft Project 🤠"]
+   [:h1 "Michaelsoft Project"]
    [:p "A simple Gantt chart planner. No sign up required."]
    [:p
     [:button {:on-click create-project} "new project"]]
+   [:p]
+   [:> Twemoji "🤠"]
    ;[:pre (pr-str @state)]
    ;[:p [:a {:href "/mypage"} "Static server rendered page."]]
    ;[:p [:a {:href "/api/example.json"} "JSON API example."]]
