@@ -23,20 +23,25 @@
 
 (defn sum-parent-duration [durations *tasks task depth]
   (let [parent-idx (:parent task)
+        index-in-bounds (< (int parent-idx) (inc (count *tasks)))
         parent-task (when (and parent-idx
                                (> (int parent-idx) 0)
-                               (< (int parent-idx) (inc (count *tasks))))
+                               index-in-bounds)
                       (nth *tasks (dec (int parent-idx))))]
-    (if (and parent-task (< depth (count *tasks)))
-      (conj (sum-parent-duration durations *tasks parent-task (inc depth)) (int (:duration parent-task)))
-      nil)))
+    (if (not index-in-bounds)
+      [:error]
+      (if (and parent-task (< depth (count *tasks)))
+        (conj (sum-parent-duration durations *tasks parent-task (inc depth)) (int (:duration parent-task)))
+        nil))))
 
 (defn compute-date-range [start *tasks task]
   (let [duration (int (:duration task))
         parent-durations (sum-parent-duration [] *tasks task 0)
         parents-duration (apply + parent-durations)]
     ; show an error if recursion depth exceeded task count
-    (if (= (count *tasks) (count parent-durations))
+    (if (or
+          (some #(= :error %) parent-durations)
+          (= (count *tasks) (count parent-durations)))
       [:error :error]
       [(end-date start parents-duration) (end-date start (+ parents-duration duration))])))
 
