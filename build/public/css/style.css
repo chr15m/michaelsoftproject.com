@@ -1,0 +1,106 @@
+html, body, #app, #loading {
+  height: 100%;
+}
+
+body {
+  max-width: 100%;
+  font-family: Helvetica, Arial, sans-serif;
+  margin: auto;
+  padding: 1em;
+  font-size: 1em;
+  color: #555;
+}
+
+/*** default styles ***/
+
+table input, button, td > span {
+  font-size: 1.25em;
+  padding: 0.25em 0.5em;
+  font-family: monospace;
+  color: #333;
+}
+
+button {
+  background: #6CD26C;
+  border: 1px solid green;
+  border-radius: 3px;
+  border-bottom: 6px solid green;
+}
+
+button:active {
+  transform: translateY(6px);
+  border-bottom: 1px solid green;
+  margin-bottom: 5px;
+}
+
+h1, h2, h3, h1 input, h2 input, h3 input, h4 input {
+  border: none;
+  color: #333;
+}
+
+h1 input {
+  font-size: 1.5em;
+}
+
+h2 input {
+  font-size: 1.25em;
+}
+
+h3 input {
+  font-size: 1.125em;
+}
+
+/*** special ***/
+
+input.error {
+  border: 1px solid #ED5B5B;
+}
+
+td.map {
+  width: 3ch;
+}
+
+td.fill {
+  background-color: #4242E7;
+}
+
+/*** landing page ***/
+
+#landing {
+  font-size: 1.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#landing h1 {
+  font-family: "Arial Black";
+  letter-spacing: .05em;
+  font-size: 2em;
+}
+
+/*** loader ***/
+
+#loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#loading div {
+  animation: spin 0.33s linear infinite;
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+  border: 3px solid transparent;
+  border-left: 3px solid silver;
+  border-right: 3px solid silver;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
