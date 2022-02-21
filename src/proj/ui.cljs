@@ -18,22 +18,22 @@
   (swap! tasks dissoc id))
 
 (defn component-task-edit [tasks id start duration]
-  [:tr {:key id}
-           [:td [:input (data/editable tasks [id :task])]]
-           [:td [:input (data/editable tasks [id :who])]]
-           [:td [:input (data/editable tasks [id :progress]
-                                       {:type "number"
-                                        :min 0
-                                        :max 100})]]
-           [:td [:input (data/editable tasks [id :duration]
-                                       {:type "number"
-                                        :min 0
-                                        :max 1000})]]
-           [:td [:input (data/editable tasks [id :start]
-                                       {:type "date"
-                                        :defaultValue (data/today)})]]
-           [:td [:span (data/end-date start duration)]]
-           [:td [:button {:on-click #(remove-task tasks id)} "X"]]])
+  [:tr
+   [:td [:input (data/editable tasks [id :task])]]
+   [:td [:input (data/editable tasks [id :who])]]
+   [:td [:input (data/editable tasks [id :progress]
+                               {:type "number"
+                                :min 0
+                                :max 100})]]
+   [:td [:input (data/editable tasks [id :duration]
+                               {:type "number"
+                                :min 0
+                                :max 1000})]]
+   [:td [:input (data/editable tasks [id :start]
+                               {:type "date"
+                                :defaultValue (data/today)})]]
+   [:td [:span (data/end-date start duration)]]
+   [:td [:button {:on-click #(remove-task tasks id)} "X"]]])
 
 (defn component-tasks-table [tasks]
   [identity
@@ -69,7 +69,6 @@
 
 (defn component-project [state]
   (let [project (r/cursor state [:project])
-        {:keys [title company lead]} @project
         tasks (r/cursor state [:project :tasks])]
     [:div
      [:h1 [:input (data/editable project [:title] {:placeholder "Untitled project"})]]
