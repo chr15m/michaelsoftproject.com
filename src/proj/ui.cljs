@@ -13,45 +13,61 @@
   (let [task (data/make-task)]
     (swap! tasks assoc (:id task) task)))
 
+(defn remove-task [tasks id]
+  (swap! tasks dissoc id))
+
 (defn component-tasks-table [tasks]
-  [:div
-   [:table
-    [:thead
-     [:tr
-      [:td "Task"]
-      [:td "Who"]
-      [:td "progress"]
-      [:td "Duration"]
-      [:td "Start"]
-      [:td "End"]]]
-    [:tbody
-     (for [{:keys [task who progress start duration]} @tasks]
-       [:tr
-        [:td task]
-        [:td who]
-        [:td progress]
-        [:td duration]
-        [:td start]
-        [:td "end"]])]]
-   [:button {:on-click #(create-task tasks)} "Add task"]])
+  [identity
+   [:div
+    [:table
+     [:thead
+      [:tr
+       [:td "Task"]
+       [:td "Who"]
+       [:td "Progress"]
+       [:td "Days"]
+       [:td "Start"]
+       [:td "End"]
+       [:td ""]]]
+     [:tbody
+      (doall
+        (for [[id {:keys [start duration]}] @tasks]
+          [:tr {:key id}
+           [:td [:input (data/editable tasks [id :task])]]
+           [:td [:input (data/editable tasks [id :who])]]
+           [:td [:input (data/editable tasks [id :progress]
+                                       {:type "number"
+                                        :min 0
+                                        :max 100})]]
+           [:td [:input (data/editable tasks [id :duration]
+                                       {:type "number"
+                                        :min 0
+                                        :max 1000})]]
+           [:td [:input (data/editable tasks [id :start]
+                                       {:type "date"
+                                        :defaultValue (data/today)})]]
+           [:td [:span (data/end-date start duration)]]
+           [:td [:button {:on-click #(remove-task tasks id)} "X"]]]))]]
+    [:button {:on-click #(create-task tasks)} "Add task"]]])
 
 (defn component-home [state]
   [:div
    [:h1 "Michaelsoft Project"]
    [:p "A simple Gantt chart planner. No sign up required."]
    [:button {:on-click create-project} "new project"]
-   [:pre (pr-str @state)]  
+   ;[:pre (pr-str @state)]
    ;[:p [:a {:href "/mypage"} "Static server rendered page."]]
    ;[:p [:a {:href "/api/example.json"} "JSON API example."]]
    ])
 
 (defn component-project [state]
-  (let [{:keys [title company lead]} @state
-        tasks (r/cursor state [:tasks])]
+  (let [project (r/cursor state [:project])
+        {:keys [title company lead]} @project
+        tasks (r/cursor state [:project :tasks])]
     [:div
-     [:h1 (or title "Untitled project")]
-     [:h2 (or company "Company name")]
-     [:h3 (or lead "Project lead")]
+     [:h1 [:input (data/editable project [:title] {:placeholder "Untitled project"})]]
+     [:h2 [:input (data/editable project [:company] {:placeholder "Company name"})]]
+     [:h3 [:input (data/editable project [:lead] {:placeholder "Project lead"})]]
      [component-tasks-table tasks]]))
 
 (defn component-main [state]

@@ -4,10 +4,47 @@ html, body, #app, #loading {
 
 body {
   max-width: 100%;
-  width: 800px;
   font-family: Helvetica, Arial, sans-serif;
   margin: auto;
+  padding: 1em;
+  font-size: 1em;
+  color: #555;
 }
+
+/*** default styles ***/
+
+table input, button, td > span {
+  font-size: 1.25em;
+  padding: 0.25em 0.5em;
+  font-family: monospace;
+  color: #333;
+}
+
+button {
+  background: #6CD26C;
+  border: 1px solid green;
+  border-radius: 3px;
+  border-bottom: 4px solid green;
+}
+
+h1, h2, h3, h1 input, h2 input, h3 input, h4 input {
+  border: none;
+  color: #333;
+}
+
+h1 input {
+  font-size: 1.5em;
+}
+
+h2 input {
+  font-size: 1.25em;
+}
+
+h3 input {
+  font-size: 1.125em;
+}
+
+/*** loader ***/
 
 #loading {
   display: flex;
