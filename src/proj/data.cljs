@@ -23,7 +23,9 @@
 
 (defn sum-parent-duration [durations *tasks task depth]
   (let [parent-idx (:parent task)
-        parent-task (when (and parent-idx (> (int parent-idx) 0))
+        parent-task (when (and parent-idx
+                               (> (int parent-idx) 0)
+                               (< (int parent-idx) (inc (count *tasks))))
                       (nth *tasks (dec (int parent-idx))))]
     (if (and parent-task (< depth (count *tasks)))
       (conj (sum-parent-duration durations *tasks parent-task (inc depth)) (int (:duration parent-task)))
