@@ -35,6 +35,7 @@
    :title nil
    :company nil
    :lead nil
+   :start nil
    :tasks {}})
 
 (defn editable

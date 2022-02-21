@@ -16,6 +16,24 @@
 (defn remove-task [tasks id]
   (swap! tasks dissoc id))
 
+(defn component-task-edit [tasks id start duration]
+  [:tr {:key id}
+           [:td [:input (data/editable tasks [id :task])]]
+           [:td [:input (data/editable tasks [id :who])]]
+           [:td [:input (data/editable tasks [id :progress]
+                                       {:type "number"
+                                        :min 0
+                                        :max 100})]]
+           [:td [:input (data/editable tasks [id :duration]
+                                       {:type "number"
+                                        :min 0
+                                        :max 1000})]]
+           [:td [:input (data/editable tasks [id :start]
+                                       {:type "date"
+                                        :defaultValue (data/today)})]]
+           [:td [:span (data/end-date start duration)]]
+           [:td [:button {:on-click #(remove-task tasks id)} "X"]]])
+
 (defn component-tasks-table [tasks]
   [identity
    [:div
@@ -32,29 +50,15 @@
      [:tbody
       (doall
         (for [[id {:keys [start duration]}] @tasks]
-          [:tr {:key id}
-           [:td [:input (data/editable tasks [id :task])]]
-           [:td [:input (data/editable tasks [id :who])]]
-           [:td [:input (data/editable tasks [id :progress]
-                                       {:type "number"
-                                        :min 0
-                                        :max 100})]]
-           [:td [:input (data/editable tasks [id :duration]
-                                       {:type "number"
-                                        :min 0
-                                        :max 1000})]]
-           [:td [:input (data/editable tasks [id :start]
-                                       {:type "date"
-                                        :defaultValue (data/today)})]]
-           [:td [:span (data/end-date start duration)]]
-           [:td [:button {:on-click #(remove-task tasks id)} "X"]]]))]]
+          [component-task-edit tasks id start duration]))]]
     [:button {:on-click #(create-task tasks)} "Add task"]]])
 
-(defn component-home [state]
-  [:div
-   [:h1 "Michaelsoft Project"]
+(defn component-home [_state]
+  [:div#landing
+   [:h1 "Michaelsoft Project 🤠"]
    [:p "A simple Gantt chart planner. No sign up required."]
-   [:button {:on-click create-project} "new project"]
+   [:p
+    [:button {:on-click create-project} "new project"]]
    ;[:pre (pr-str @state)]
    ;[:p [:a {:href "/mypage"} "Static server rendered page."]]
    ;[:p [:a {:href "/api/example.json"} "JSON API example."]]
