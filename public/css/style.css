@@ -14,8 +14,8 @@ html, body, #app, #loading {
   color: #555;
 }
 
-#app > div {
-  padding-bottom: 5em;
+div#planner {
+  padding-bottom: 7em;
 }
 
 /*** default styles ***/

@@ -112,7 +112,7 @@
   (let [project (r/cursor state [:project])
         tasks (r/cursor state [:project :tasks])
         start (get-in @state [:project :start])]
-    [:div
+    [:div#planner
      [:h1 [:input (data/editable project [:title] {:placeholder "Untitled project"})]]
      [:h2 [:input (data/editable project [:company] {:placeholder "Company name"})]]
      [:h3 [:input (data/editable project [:lead] {:placeholder "Project lead"})]]
