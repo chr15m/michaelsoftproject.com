@@ -1,4 +1,4 @@
-STATIC=public/*.html public/css public/cowboy.png # public/images public/assets
+STATIC=public/*.html public/css public/*.png # public/images public/assets
 
 all: build build/server.js
 
