@@ -1,5 +1,7 @@
 Michaelsoft Project
 
+![Michaelsoft Project screencast](./public/images/screencast.gif)
+
 # Dev
 
 ```
