@@ -28,7 +28,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -50,12 +50,19 @@
      borderlayer="true"
      inkscape:showpageshadow="false"
      inkscape:zoom="1"
-     inkscape:cx="522.84515"
-     inkscape:cy="374.56152"
+     inkscape:cx="520.34515"
+     inkscape:cy="378.56152"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg2" />
+  <rect
+     style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     id="rect4137"
+     width="1041"
+     height="788"
+     x="-10"
+     y="-12" />
   <g
      id="g4148"
      transform="translate(0,-41.755615)">
@@ -63,27 +70,7 @@
        y="348"
        x="476"
        id="image10"
-       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAMAAABiM0N1AAAAt1BMVEVHcExmRQBmRQD/zE3/zE3/
-zE1mRQBmRQD/zE3/zE1mRQD/zE3/zE3/zE3/zE3/zE1mRQD/zE3/zE3/zE1mRQBmRQBmRQBmRQBm
-RQBmRQBmRQBmRQBmRQCziSfPojXGmTD1xEiDXg6pgCLsu0O8kStmRQBxTgV7VwtoRwGCXQ5tSwR0
-UQdvTQT/zE14VAl9WQtrSgN/WgxqSAKWbxiMZxPZqjp5VgqAXA12UwhyUAZwTQXisz+feB3uX3aT
-AAAAHXRSTlMArxDPMJ9g7++An0AQ348gML9QcFCPv8/fIECAcIG5iT4AAAMgSURBVHhe1NPLkpww
-DAVQwQJnprJg0bSBme31g3f3vCf5/+9KVNXtHpdMKs4uZwXlkkCgS/+PQwtAFVVJjMqqUADaA2W6
-x9V9TVR/uaUsFXZVlKFT2KW63MGc9d6v4xkAzuPqvbcuc7gO3IdL2TIMy+Vy5U7o8l6Ii4XlT69U
-9z1FSgVg8EkDAFVSpO9rrir46CB+2eKTFvHjKgWgKOlBrge3dn6H4zK5cA+k5HoAwIff8QEAcuEU
-4aoJ4QAzJ59wMmAhKA2uCIHu48NpefORt2WKH9prBFTgpm241xHBZkZ7MZoNwZG7NC1uCpEqzX2w
-ISkcHbVMoEaCtQOSBmuRoHlQJHAcjEMMznBskNCHjxs7X6I1TmHGbeLcMkgNsdRwxu8yEPQtW8K2
-+qR1QyzKXq0gmVcvvBpIqqag00hw07sN+32y75NDgu7oi7LAv+Hcxx4V8kE9ktA9IdtTR9Ld/PKM
-LM8v8x0J37/N8/zj5yf+0q/e6mbHVRiGArClghRUaAWsw09bL88qwIL0/Z/r3tKZUWLSDLCYbwnS
-ieUo9vy0AFQeKGjRtWZD1mzaDouMpAI/Rj1EwuZBj/hRkFDBdx+1HoaJHdMwaD3e4avIl+KglHwK
-wvg+W9Y5QlDkSeCzPTPfINyYubfwJeSq4ev55QHPg196+OpYi1pezPDMvGhjTSrhMfzWwNHwm4Gn
-JBeCZ7OGQ3OwTsSCOBbE8P1JRUOsR0M0KHxrHRyduLUtQZicFokmTdgTZF9JTwjPV47dFYSu0RYr
-VjcdokElDitjT+T4HKlxWC3GyGGJHGwHqdioNazxkWYTG7WVmIRTg6BmEpOziqwjdD0z9y1W2uVH
-h8g6ogyO+/Ks5puFw97eX+9wZKGV7bDz90rVzfhfo833Fy9c5bSSyccWIp9aRgEFXJ3hANPBVVDI
-eX1BwuoqzxR0gdD6u7+FcKGw/ATJPsyyK3vzsJBOOX1wVdhBXemjZEeSSoiOJsmco0kyJ+56wgan
-K/0qv+BXl5y2OBeIKs60VRbplMpohzwrEFRkOe1UpQqCSis6JKnTEl/KtE4o4h9OuTUqhPjOMQAA
-AABJRU5ErkJggg==
-"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAMAAABiM0N1AAAAt1BMVEVHcExmRQBmRQD/zE3/zE3/ zE1mRQBmRQD/zE3/zE1mRQD/zE3/zE3/zE3/zE3/zE1mRQD/zE3/zE3/zE1mRQBmRQBmRQBmRQBm RQBmRQBmRQBmRQBmRQCziSfPojXGmTD1xEiDXg6pgCLsu0O8kStmRQBxTgV7VwtoRwGCXQ5tSwR0 UQdvTQT/zE14VAl9WQtrSgN/WgxqSAKWbxiMZxPZqjp5VgqAXA12UwhyUAZwTQXisz+feB3uX3aT AAAAHXRSTlMArxDPMJ9g7++An0AQ348gML9QcFCPv8/fIECAcIG5iT4AAAMgSURBVHhe1NPLkpww DAVQwQJnprJg0bSBme31g3f3vCf5/+9KVNXtHpdMKs4uZwXlkkCgS/+PQwtAFVVJjMqqUADaA2W6 x9V9TVR/uaUsFXZVlKFT2KW63MGc9d6v4xkAzuPqvbcuc7gO3IdL2TIMy+Vy5U7o8l6Ii4XlT69U 9z1FSgVg8EkDAFVSpO9rrir46CB+2eKTFvHjKgWgKOlBrge3dn6H4zK5cA+k5HoAwIff8QEAcuEU 4aoJ4QAzJ59wMmAhKA2uCIHu48NpefORt2WKH9prBFTgpm241xHBZkZ7MZoNwZG7NC1uCpEqzX2w ISkcHbVMoEaCtQOSBmuRoHlQJHAcjEMMznBskNCHjxs7X6I1TmHGbeLcMkgNsdRwxu8yEPQtW8K2 +qR1QyzKXq0gmVcvvBpIqqag00hw07sN+32y75NDgu7oi7LAv+Hcxx4V8kE9ktA9IdtTR9Ld/PKM LM8v8x0J37/N8/zj5yf+0q/e6mbHVRiGArClghRUaAWsw09bL88qwIL0/Z/r3tKZUWLSDLCYbwnS ieUo9vy0AFQeKGjRtWZD1mzaDouMpAI/Rj1EwuZBj/hRkFDBdx+1HoaJHdMwaD3e4avIl+KglHwK wvg+W9Y5QlDkSeCzPTPfINyYubfwJeSq4ev55QHPg196+OpYi1pezPDMvGhjTSrhMfzWwNHwm4Gn JBeCZ7OGQ3OwTsSCOBbE8P1JRUOsR0M0KHxrHRyduLUtQZicFokmTdgTZF9JTwjPV47dFYSu0RYr VjcdokElDitjT+T4HKlxWC3GyGGJHGwHqdioNazxkWYTG7WVmIRTg6BmEpOziqwjdD0z9y1W2uVH h8g6ogyO+/Ks5puFw97eX+9wZKGV7bDz90rVzfhfo833Fy9c5bSSyccWIp9aRgEFXJ3hANPBVVDI eX1BwuoqzxR0gdD6u7+FcKGw/ATJPsyyK3vzsJBOOX1wVdhBXemjZEeSSoiOJsmco0kyJ+56wgan K/0qv+BXl5y2OBeIKs60VRbplMpohzwrEFRkOe1UpQqCSis6JKnTEl/KtE4o4h9OuTUqhPjOMQAA AABJRU5ErkJggg== "
        preserveAspectRatio="none"
        height="72"
        width="72" />
