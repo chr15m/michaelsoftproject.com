@@ -85,6 +85,16 @@
              (with-meta [component-task-edit start (get start-end-map id) tasks idx task days] {:key id}))))]]
      [:button {:on-click #(create-task tasks)} "Add task"]]))
 
+(defn component-footer []
+  [:footer
+   [:p "This is a prototype. Tell me what to fix "
+    [:a {:href "mailto:chris@mccormick.cx"} "by email"]
+    " or "
+    [:a {:href "https://twitter.com/mccrmx/status/1495756501947977729"
+         :target "_BLANK"}
+     "on Twitter"]
+    "."]])
+
 (defn component-home [_state]
   [:div#landing
    [:h1 "Michaelsoft Project"]
@@ -110,6 +120,7 @@
                                                   {:type "date"
                                                    :defaultValue (data/today)})]]]
      [component-tasks-table start tasks]
+     [component-footer]
      ;[:pre (pr-str @tasks)]
      ]))
 

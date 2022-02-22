@@ -1,14 +1,21 @@
 html, body, #app, #loading {
   height: 100%;
+  box-sizing: border-box;
+  padding: 0px;
+  margin: 0px;
 }
 
-body {
+#app {
   max-width: 100%;
   font-family: Helvetica, Arial, sans-serif;
   margin: auto;
   padding: 1em;
   font-size: 1em;
   color: #555;
+}
+
+#app > div {
+  padding-bottom: 5em;
 }
 
 /*** default styles ***/
@@ -48,6 +55,21 @@ h2 input {
 
 h3 input {
   font-size: 1.125em;
+}
+
+footer {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+  background-color: white;
+  box-shadow: 0px 0px 5px silver;
+  font-size: 1.5em;
+}
+
+footer a {
+  color: #D26C6C;
 }
 
 /*** special ***/
