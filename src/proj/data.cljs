@@ -2,6 +2,8 @@
   (:require
     [sitefox.ui :refer [log]]))
 
+(log "data.cljs loaded")
+
 (defn today []
   (let [d (js/Date.)]
     (str

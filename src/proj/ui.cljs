@@ -37,8 +37,8 @@
 (defn component-task-edit [project-start [start end] tasks idx task days]
   [:tr
    [:td (inc idx)]
-   [:td [:input (data/editable tasks [idx :task])]]
-   [:td [:input (data/editable tasks [idx :who])]]
+   [:td [:input (data/editable tasks [idx :task] {:placeholder "Task name"})]]
+   [:td [:input (data/editable tasks [idx :who] {:placeholder "Person responsible"})]]
    [:td [:input (data/editable tasks [idx :progress]
                                {:type "number"
                                 :min 0
@@ -46,6 +46,7 @@
    [:td [:input (data/editable tasks [idx :parent]
                                {:class (when (= start :error) :error)
                                 :type "number"
+                                :placeholder "Parent number"
                                 :min 0
                                 :max 1000})]]
    [:td [:input (data/editable tasks [idx :duration]
