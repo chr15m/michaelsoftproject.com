@@ -91,6 +91,15 @@ td.fill {
   background-color: #6C7BD2;
 }
 
+.icon svg {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.icon svg path {
+  fill: #333;
+}
+
 /*** landing page ***/
 
 #landing {

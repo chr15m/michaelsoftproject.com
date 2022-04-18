@@ -1,5 +1,6 @@
 (ns proj.ui
   (:require
+    [shadow.resource :as rc]
     [proj.data :as data]
     ["react-twemoji$default" :as Twemoji]
     [sitefox.ui :refer [log]]
@@ -18,6 +19,10 @@
   (swap! tasks (fn [old-tasks]
                  (vec
                    (remove #(= id (:id %)) old-tasks)))))
+
+(defn component-icon [svg]
+  [:span {:class "icon"
+          :ref (fn [el] (when el (aset el "innerHTML" svg)))}])
 
 (defn component-task-header [days]
   [:tr
@@ -55,7 +60,7 @@
                                 :max 1000})]]
    [:td [:span (data/format-date start)]]
    [:td [:span (data/format-date end)]]
-   [:td [:button {:on-click #(remove-task tasks (:id task))} "X"]]
+   [:td [:button {:on-click #(remove-task tasks (:id task))} [component-icon (rc/inline "times.svg")]]]
    (doall
      (for [d (range (max 14 days))]
        (let [date (data/end-date project-start d)
