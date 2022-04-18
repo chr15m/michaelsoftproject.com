@@ -58,8 +58,11 @@
    (doall
      (for [d (range (max 14 days))]
        (let [date (data/end-date project-start d)
-             filled (and (<= (.getTime start) (.getTime date))
-                         (> (.getTime end) (.getTime date)))]
+             filled (and
+                      start end date
+                      (not= start :error) (not= end :error)
+                      (<= (.getTime start) (.getTime date))
+                      (> (.getTime end) (.getTime date)))]
          [:td.map {:key d
                    :class (when filled :fill)}])))])
 
