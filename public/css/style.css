@@ -27,6 +27,11 @@ table input, button, td > span {
   color: #333;
 }
 
+input {
+  border: 1px solid silver;
+  border-radius: 3px;
+}
+
 button {
   background: #6CD26C;
   border: 1px solid green;
