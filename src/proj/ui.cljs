@@ -20,6 +20,9 @@
                  (vec
                    (remove #(= id (:id %)) old-tasks)))))
 
+(defn edit-task [tasks idx]
+  (swap! tasks update-in [idx :editing] not))
+
 (defn component-icon [svg]
   [:span {:class "icon"
           :ref (fn [el] (when el (aset el "innerHTML" svg)))}])
@@ -28,41 +31,63 @@
   [:tr
    [:td ""]
    [:td "Task"]
-   [:td "Who"]
-   [:td "Progress"]
-   [:td "Parent"]
-   [:td "Days"]
+   [:td "Resource"]
    [:td "Start"]
    [:td "End"]
    [:td]
+   #_ [:td "Progress"]
+   #_ [:td "Parent"]
+   #_ [:td "Days"]
    (doall
-     (for [d (range (max 14 days))]
+     (for [d (range (max 31 days))]
        [:td {:key d} d]))])
 
-(defn component-task-edit [project-start [start end] tasks idx task days]
+(defn component-task-edit [_project-start [start end] tasks idx task _days]
+  [:tr.edit
+   [:td (inc idx)]
+   [:td [:input (data/editable tasks [idx :task] {:placeholder "Task name"})]]
+   [:td [:input (data/editable tasks [idx :who] {:placeholder "Resource"})]]
+   [:td [:span (data/format-date start)]]
+   [:td [:span (data/format-date end)]]
+   [:td [:button {:on-click #(edit-task tasks idx)}
+         [component-icon (rc/inline "check.svg")]]]
+   [:td {:colspan 200}
+    [:span
+     [:label "Duration"]
+     [:input (data/editable tasks [idx :duration]
+                            {:type "number"
+                             :placeholder "Duration"
+                             :min 0
+                             :max 1000})]]
+    [:span
+     [:label "Predecessor"]
+     [:input (data/editable tasks [idx :parent]
+                            {:class (when (= start :error) :error)
+                             :type "number"
+                             :placeholder "Predecessor"
+                             :min 0
+                             :max 1000})]]
+    #_ [:span
+        [:label "Complete"]
+        [:input (data/editable tasks [idx :progress]
+                               {:type "number"
+                                :placeholder "Percent done"
+                                :min 0
+                                :max 100})]]
+    [:button.warning {:on-click #(remove-task tasks (:id task))}
+     [component-icon (rc/inline "trash.svg")]]]])
+
+(defn component-task-show [project-start [start end] tasks idx _task days]
   [:tr
    [:td (inc idx)]
    [:td [:input (data/editable tasks [idx :task] {:placeholder "Task name"})]]
-   [:td [:input (data/editable tasks [idx :who] {:placeholder "Person responsible"})]]
-   [:td [:input (data/editable tasks [idx :progress]
-                               {:type "number"
-                                :min 0
-                                :max 100})]]
-   [:td [:input (data/editable tasks [idx :parent]
-                               {:class (when (= start :error) :error)
-                                :type "number"
-                                :placeholder "Parent number"
-                                :min 0
-                                :max 1000})]]
-   [:td [:input (data/editable tasks [idx :duration]
-                               {:type "number"
-                                :min 0
-                                :max 1000})]]
+   [:td [:input (data/editable tasks [idx :who] {:placeholder "Resource"})]]
    [:td [:span (data/format-date start)]]
    [:td [:span (data/format-date end)]]
-   [:td [:button {:on-click #(remove-task tasks (:id task))} [component-icon (rc/inline "times.svg")]]]
+   [:td [:button {:on-click #(edit-task tasks idx)}
+         [component-icon (rc/inline "pencil.svg")]]]
    (doall
-     (for [d (range (max 14 days))]
+     (for [d (range (max 31 days))]
        (let [date (data/end-date project-start d)
              filled (and
                       start end date
@@ -83,15 +108,18 @@
         days (/ seconds (* 1000 60 60 24))]
     (log days)
     [:div
-     [:table
-      [:thead
-       [component-task-header days]]
-      [:tbody
-       (doall
-         (for [idx (range (count @tasks))]
-           (let [task (nth @tasks idx)
-                 id (:id task)]
-             (with-meta [component-task-edit start (get start-end-map id) tasks idx task days] {:key id}))))]]
+     (when (seq @tasks)
+       [:table
+        [:thead
+         [component-task-header days]]
+        [:tbody
+         (doall
+           (for [idx (range (count @tasks))]
+             (let [task (nth @tasks idx)
+                   id (:id task)]
+               (if (:editing task)
+                 (with-meta [component-task-edit start (get start-end-map id) tasks idx task days] {:key id})
+                 (with-meta [component-task-show start (get start-end-map id) tasks idx task days] {:key id})))))]])
      [:button {:on-click #(create-task tasks)} "Add task"]]))
 
 (defn component-footer []

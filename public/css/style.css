@@ -45,6 +45,16 @@ button:active {
   margin-bottom: 5px;
 }
 
+button.warning {
+  background: #D26C6C;
+  border: 1px solid #800D00;
+  border-bottom: 6px solid #800D00;
+}
+
+button.warning:active {
+  border-bottom: 1px solid #800D00;
+}
+
 h1, h2, h3, h1 input, h2 input, h3 input, h4 input {
   border: none;
   color: #333;
@@ -98,6 +108,16 @@ td.fill {
 
 .icon svg path {
   fill: #333;
+}
+
+tr.edit label {
+  position: absolute;
+  background-color: white;
+  margin-top: -1.5em;
+  border: 1px solid silver;
+  padding: 0.25em 0.5em;
+  border-bottom: 0px;
+  z-index: 0;
 }
 
 /*** landing page ***/
